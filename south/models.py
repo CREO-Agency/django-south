@@ -1,7 +1,11 @@
 from django.db import models
 from south.db import DEFAULT_DB_ALIAS
+from django.conf import settings
 
 class MigrationHistory(models.Model):
+    class Meta:
+        db_table = settings.MIGRATION_HISTORY_TABLE if hasattr(settings, 'MIGRATION_HISTORY_TABLE') else 'south_migrationhistory'
+
     app_name = models.CharField(max_length=255)
     migration = models.CharField(max_length=255)
     applied = models.DateTimeField(blank=True)
